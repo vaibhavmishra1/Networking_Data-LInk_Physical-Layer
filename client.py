@@ -2,7 +2,7 @@
 
 
 import socket
-import Data_Link
+from Data_Link import Encoder_data_link 
 import Physical
 import json
 import pickle
@@ -11,12 +11,11 @@ PORT = 65432        # The port used by the server
 send_data="sending data from sender to receiver"
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
-    data_link_encoder=Data_Link.Encoder_data_link(send_data)
-    data_link_encoder.create_frame()
+    data_link_encoder=Encoder_data_link(send_data)
+    data_link_encoder.cycle_redundancy_check(key="1001")
+    data_link_encoder.print_string()
     passed_data_link=data_link_encoder.get_frame()
-    print(passed_data_link["data"])
-    print(passed_data_link["ip_address"])
-
+    
 
     physical_class=Physical.physical(passed_data_link)
     passed_physical=physical_class.modified_data

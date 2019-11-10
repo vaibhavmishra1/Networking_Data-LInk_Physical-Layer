@@ -21,9 +21,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     passed_data_link=data_link_encoder.get_frame()
     
 
-    physical_class=Physical.physical(passed_data_link)
-    passed_physical=physical_class.modified_data
-
+    physical_class=Physical.Encoder_physical(passed_data_link)
+    physical_class.convert_AMI()
+    passed_physical=physical_class.modified_frame
+    print(passed_physical)
 
     data= pickle.dumps(passed_physical) #data serialized
     s.sendall(data)

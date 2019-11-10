@@ -32,10 +32,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             
             else:
                 s.close()
+                print("current address=",SOURCE)
+                print("forwarding request to address=",DEST)
                 with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as t:
                     t.connect((HOST,PORT_DEST))
                     data_send=pickle.dumps(dictio)
                     t.sendall(data_send)
+                    t.close()
+
 
 
 

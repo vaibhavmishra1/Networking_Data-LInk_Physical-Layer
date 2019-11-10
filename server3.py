@@ -5,8 +5,8 @@ import json
 import pickle
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-PORT = 65431     # Port to listen on (non-privileged ports are > 1023)
-PORT_DEST=65430
+PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
+PORT_DEST=65431
 SOURCE="192.168.1.5"
 DEST="192.168.6.8"
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

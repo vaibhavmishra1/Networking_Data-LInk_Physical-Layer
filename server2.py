@@ -3,7 +3,8 @@
 import socket
 import json
 import pickle
-
+from Data_Link import Decoder_data_link
+from Physical import Decoder_physical
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
 PORT_DEST=65431
@@ -24,12 +25,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if not data:
                 break
             
-            dest_ip=dictio["destination_ip_address"]
+            dest_ip=dictio["destination_address"]
             if (dest_ip==SOURCE):
                 print("target found")
                 print("target ip address=",SOURCE)
-                print(dictio)
-            
+                decoder_class=Decoder_physical(dictio)
+                decoder_class.convert_AMI()
+                print(decoder_class.get_frame())
+                decoder_data_link_class=Decoder_data_link(dictio)
+                decoder_data_link_class.cycle_redundancy_check()
             else:
                 s.close()
                 print("current address=",SOURCE)
